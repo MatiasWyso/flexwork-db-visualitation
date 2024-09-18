@@ -6,7 +6,8 @@ import { getAuth, onAuthStateChanged } from "firebase/auth";
 
 const App: React.FC = () => {
   const [user, setUser] = useState<any>(null);
-
+  console.log('Firebase API Key:', process.env.REACT_APP_FIREBASE_API_KEY);
+  
   React.useEffect(() => {
     const auth = getAuth();
     onAuthStateChanged(auth, (currentUser) => {
@@ -16,6 +17,7 @@ const App: React.FC = () => {
 
   return (
     <div className="App">
+      
       {user ? <GridPage /> : <Login />}
     </div>
   );
