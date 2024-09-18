@@ -6,7 +6,6 @@ import { getAuth, onAuthStateChanged } from "firebase/auth";
 
 const App: React.FC = () => {
   const [user, setUser] = useState<any>(null);
-  console.log('Firebase API Key:', process.env.REACT_APP_FIREBASE_API_KEY);
   
   React.useEffect(() => {
     const auth = getAuth();
