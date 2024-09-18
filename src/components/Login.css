@@ -1,0 +1,91 @@
+/* src/components/Login.css */
+
+/* Estilos del formulario de inicio de sesión */
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 2em;
+    background-color: #292929;
+    border-radius: 25px;
+    transition: 0.4s ease-in-out;
+    max-width: 400px;
+    margin: auto;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+  
+  
+  #heading {
+    text-align: center;
+    margin-bottom: 1em;
+    color: rgb(255, 255, 255);
+    font-size: 1.5em;
+  }
+  
+  .field {
+    display: flex;
+    align-items: center;
+    gap: 0.5em;
+    border-radius: 25px;
+    padding: 0.6em;
+    border: none;
+    color: white;
+    background-color: #252525;
+    box-shadow: inset 2px 5px 10px rgb(5, 5, 5);
+  }
+  
+  .input-icon {
+    height: 1.3em;
+    width: 1.3em;
+    fill: white;
+  }
+  
+  .input-field {
+    background: none;
+    border: none;
+    outline: none;
+    width: 100%;
+    color: #d3d3d3;
+  }
+  
+  .form .btn {
+    display: flex;
+    justify-content: center;
+    gap: 1em;
+    margin-top: 1.5em;
+  }
+  
+  .button1 {
+    padding: 1em;
+    border-radius: 5px;
+    border: none;
+    outline: none;
+    transition: 0.4s ease-in-out;
+    color: white;
+  }
+  
+  .button1 {
+    background-color: #252525;
+  }
+  
+  .button1:hover {
+    background-color: black;
+  }
+  
+  .button2 {
+    background-color: #252525;
+  }
+  
+  .button2:hover {
+    background-color: black;
+  }
+  
+  .button3 {
+    background-color: #252525;
+    margin-top: 1em;
+  }
+  
+  .button3:hover {
+    background-color: red;
+  }
+  

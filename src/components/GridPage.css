@@ -1,0 +1,212 @@
+/* src/components/GridPage.css */
+
+.card {
+  padding: 1rem;
+  background-color: #fff;
+  max-width: 500px;
+  border-radius: 20px;
+  box-shadow: 10px 10px #323232;
+  border: 3px solid #323232;
+  max-height: 700px;
+  overflow-y: auto
+}
+
+
+.title {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.title span {
+  position: relative;
+  padding: 0.5rem;
+  background-color: #10b981;
+  width: 1rem;
+  height: 1rem;
+  border-radius: 9999px;
+}
+
+.title span svg {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: #ffffff;
+  height: 1rem;
+}
+
+.title-text {
+    margin-left: 0.5rem;
+    color: #374151; /* Color principal del texto */
+    font-size: 18px;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600; /* Ajusta el grosor del texto */
+    letter-spacing: 0.5px; /* Espaciado entre letras */
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1); /* Sombra sutil */
+    border-bottom: 2px solid #4DC5AC; /* Línea decorativa inferior */
+    padding-bottom: 4px; /* Espaciado para la línea inferior */
+    transition: color 0.3s ease, border-bottom-color 0.3s ease; /* Transiciones suaves */
+  }
+
+.data {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.data p {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  color: #1f2937;
+  font-size: 2.25rem;
+  line-height: 2.5rem;
+  font-weight: 700;
+  text-align: left;
+}
+
+.data .range {
+  position: relative;
+  background-color: #e5e7eb;
+  width: 100%;
+  height: 0.5rem;
+  border-radius: 0.25rem;
+}
+
+.data .range .fill {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: #8910b9;
+  width: 76%;
+  height: 100%;
+  border-radius: 0.25rem;
+}
+
+/* Agregar estilos para la lista y detalles si es necesario */
+.grid-header {
+  display: flex;
+  flex-direction: column; /* Cambia la dirección a columna para apilar el botón y la lista verticalmente */
+  align-items: center; /* Centra los elementos horizontalmente */
+  margin-top: 1rem;
+}
+
+/* src/components/GridPage.css */
+.name-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.name-item {
+  cursor: pointer;
+  padding: 10px;
+  border-radius: 5px;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+.name-item:hover {
+  background-color: #f0f0f0;
+}
+.name-item.selected {
+  background-color: #4b1e85; /* Color de fondo para el ítem seleccionado */
+  color: white; /* Color del texto para el ítem seleccionado */
+}
+
+.name-item.selected .item-index {
+  color: white; /* Cambia el color del número a blanco cuando el ítem esté seleccionado */
+}
+
+.item-index {
+  display: inline-block;
+  width: 2rem;
+  text-align: center;
+  margin-right: 1rem;
+  font-weight: bold;
+  color: #333;
+}
+
+.details-container {
+  margin-top: 1rem;
+}
+
+.grid-page {
+    display: flex;
+  }
+
+  
+  .details-container {
+    margin-left: 20px;
+  }
+  
+  .details-content {
+    background: #f9f9f9;
+    border: 2px solid #ddd;
+    border-radius: 4px;
+    padding: 15px;
+  }
+  
+  .name-list {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .name-item {
+    cursor: pointer;
+    padding: 0.5rem;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .item-index {
+    display: inline-block;
+    width: 2rem;
+    text-align: center;
+    margin-right: 1rem;
+    font-weight: bold;
+    color: #333;
+  }
+
+
+  .details-card {
+    width: 18em;
+    height: 16em;
+    border: 2px solid rgba(75, 30, 133, 0.5);
+    border-radius: 1.5em;
+    background: linear-gradient(to bottom right, #4b1e85, rgba(75, 30, 133, 0.01));
+    color: white;
+    margin-left: 40px;
+    font-family: 'Poppins', sans-serif;
+    padding: 1em;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75em;
+    backdrop-filter: blur(12px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    
+  }
+  @media (max-width: 768px) {
+    .grid-page {
+      flex-direction: column; /* Cambia la disposición a columna en móviles */
+    }
+  
+    .details-card {
+      width: 100%; 
+      height: auto; 
+      margin-left: 0; /* Elimina el margen izquierdo en móviles */
+      margin-top: 20px; /* Añade un margen superior para separar la tarjeta de la lista en móviles */
+    }
+  }
+  
+  .details-header {
+    flex-grow: 1;
+  }
+  
+  .details-title {
+    font-size: 1.5em;
+    font-weight: 500;
+    font-family: 'Poppins', sans-serif;
+  }
+  
+  .details-text {
+    font-size: 0.85em;
+  }
+  
