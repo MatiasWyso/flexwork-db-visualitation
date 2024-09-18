@@ -24,23 +24,31 @@ const GridPage: React.FC = () => {
   const [showArrow, setShowArrow] = useState(false); // Estado para mostrar la flecha
 
   useEffect(() => {
+    let initialLoad = true; // Bandera para controlar la primera carga
+  
     // Suscribirse a los cambios en tiempo real
     const unsubscribe = subscribeToData((fetchedData) => {
-      setData(fetchedData);
-      setLoading(false);
-
-      // Mostrar la flecha durante 2 segundos cada vez que cambia el número de suscriptores
-      setShowArrow(true);
-      setTimeout(() => {
-        setShowArrow(false);
-      }, 2000);
+      if (!initialLoad) {
+        // Mostrar la flecha solo cuando cambie el número de suscriptores después de la primera carga
+        if (fetchedData.length !== data.length) {
+          setShowArrow(true);
+          setTimeout(() => {
+            setShowArrow(false);
+          }, 3000);
+        }
+      } else {
+        initialLoad = false; // Evitar que la flecha se muestre en la primera carga
+      }
+  
+      setData(fetchedData); // Actualizar los datos
+      setLoading(false); // Desactivar el estado de carga
     });
-
+  
     // Limpiar la suscripción al desmontar el componente
     return () => {
       unsubscribe();
     };
-  }, []);
+  }, [data.length]); // Escuchar cambios en el número de suscriptores
 
   const handleButtonClick = () => {
     setShowList(!showList);
