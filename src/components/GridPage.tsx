@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { getDataFromFirestore } from "../services/firestoreService";
+import { subscribeToData } from "../services/firestoreService";
 import { format } from "date-fns";
 import { es } from "date-fns/locale";
 import "./GridPage.css";
@@ -20,20 +20,26 @@ const GridPage: React.FC = () => {
   const [showList, setShowList] = useState(false);
   const [selectedItem, setSelectedItem] = useState<Subscription | null>(null);
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
-  const [loading, setLoading] = useState(true); // Estado de carga
+  const [loading, setLoading] = useState(true);
+  const [showArrow, setShowArrow] = useState(false); // Estado para mostrar la flecha
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const fetchedData = await getDataFromFirestore();
-        setData(fetchedData);
-      } catch (error) {
-        console.error("Error fetching data: ", error);
-      } finally {
-        setLoading(false); // Cambiar estado de carga una vez se haya completado la obtención de datos
-      }
+    // Suscribirse a los cambios en tiempo real
+    const unsubscribe = subscribeToData((fetchedData) => {
+      setData(fetchedData);
+      setLoading(false);
+
+      // Mostrar la flecha durante 2 segundos cada vez que cambia el número de suscriptores
+      setShowArrow(true);
+      setTimeout(() => {
+        setShowArrow(false);
+      }, 2000);
+    });
+
+    // Limpiar la suscripción al desmontar el componente
+    return () => {
+      unsubscribe();
     };
-    fetchData();
   }, []);
 
   const handleButtonClick = () => {
@@ -80,6 +86,27 @@ const GridPage: React.FC = () => {
         </div>
         <div className="data">
           <p>{data.length}</p>
+          {showArrow && (
+            <span className={`arrow ${!showArrow ? "hide" : ""}`}>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="icon icon-tabler icon-tabler-arrow-big-up-lines"
+                width="44"
+                height="44"
+                viewBox="0 0 24 24"
+                strokeWidth="1.5"
+                stroke="#00b341"
+                fill="none"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                <path d="M9 12h-3.586a1 1 0 0 1 -.707 -1.707l6.586 -6.586a1 1 0 0 1 1.414 0l6.586 6.586a1 1 0 0 1 -.707 1.707h-3.586v3h-6v-3z" />
+                <path d="M9 21h6" />
+                <path d="M9 18h6" />
+              </svg>
+            </span>
+          )}
         </div>
         <div className="grid-header">
           <Boton onClick={handleButtonClick} />
@@ -88,10 +115,13 @@ const GridPage: React.FC = () => {
               {data.map((item, index) => (
                 <div
                   key={item.id}
-                  className={`name-item ${selectedIndex === index ? "selected" : ""}`}
+                  className={`name-item ${
+                    selectedIndex === index ? "selected" : ""
+                  }`}
                   onClick={() => handleNameClick(item, index)}
                 >
-                  <span className="item-index">{data.length - index}</span> {item.name} {item.lastname}
+                  <span className="item-index">{data.length - index}</span>{" "}
+                  {item.name} {item.lastname}
                 </div>
               ))}
             </div>
@@ -101,9 +131,13 @@ const GridPage: React.FC = () => {
       {showList && selectedItem && (
         <div className="details-card">
           <div className="details-header">
-            <h1 className="details-title">Detalles de la Suscripción #{selectedIndex !== null ? data.length - selectedIndex : ""}</h1>
+            <h1 className="details-title">
+              Detalles de la Suscripción #
+              {selectedIndex !== null ? data.length - selectedIndex : ""}
+            </h1>
             <p className="details-text">
-              <strong>Nombre:</strong> {selectedItem.name} {selectedItem.lastname}
+              <strong>Nombre:</strong> {selectedItem.name}{" "}
+              {selectedItem.lastname}
             </p>
             <p className="details-text">
               <strong>Email:</strong> {selectedItem.email}
@@ -113,7 +147,13 @@ const GridPage: React.FC = () => {
             </p>
             <p className="details-text">
               <strong>Fecha:</strong>{" "}
-              {format(selectedItem.timestamp, "d 'de' MMMM 'de' yyyy, h:mm:ss a 'UTC'XXX", { locale: es })}
+              {format(
+                selectedItem.timestamp,
+                "d 'de' MMMM 'de' yyyy, h:mm:ss a 'UTC'XXX",
+                {
+                  locale: es,
+                }
+              )}
             </p>
           </div>
         </div>
