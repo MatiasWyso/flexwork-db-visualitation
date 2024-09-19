@@ -1,4 +1,3 @@
-// src/components/Login.tsx
 import React, { useState } from "react";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import "./Login.css";
@@ -7,9 +6,12 @@ const Login: React.FC = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleLogin = async () => {
+  const handleLogin = async (e: React.FormEvent) => {
+    e.preventDefault(); // Para evitar recargar la página
     const auth = getAuth();
+    setIsSubmitting(true); // Cambia el estado del botón
     try {
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
       console.log("User logged in:", userCredential.user);
@@ -19,11 +21,13 @@ const Login: React.FC = () => {
       } else {
         setError("An unknown error occurred");
       }
+    } finally {
+      setIsSubmitting(false); // Restablece el estado del botón
     }
   };
 
   return (
-    <form className="form">
+    <form className="form" onSubmit={handleLogin}>
       <p id="heading">Login</p>
       <div className="field">
         <svg className="input-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
@@ -51,7 +55,13 @@ const Login: React.FC = () => {
         />
       </div>
       <div className="btn">
-        <button className="button1" type="button" onClick={handleLogin}>Login</button>
+        <button
+          className={`button1 ${isSubmitting ? "submitting" : ""}`}
+          type="submit"
+          disabled={isSubmitting}
+        >
+          {isSubmitting ? "Entrando" : "Login"}
+        </button>
       </div>
       {error && <p style={{ color: 'red', textAlign: 'center' }}>{error}</p>}
     </form>
